@@ -14,6 +14,31 @@ O objetivo é servir como base para um **SaaS simples, didático e escalável**,
 - Servir como backend para um frontend em aplicações web e mobile
 - Ser facilmente extensível para **multi-tenant SaaS**
 
+### Execução
+Navegue até a pasta raiz do projeto e em seguida execute:
+
+`docker compose up -d`
+
+Caso tenha realizado grandes mudanças no projeto, execute:
+
+`docker compose down`
+
+`docker compose up -d --build`
+
+### Comandos
+
+Todos os comandos caso sejam executados via docker, devem ser precedidos de:
+
+`docker compose exec app <COMANDO>`
+
+Criar Model com Migration:
+
+`php artisan make:model Entity -m`
+
+Criar Controller:
+
+`php artisan make:controller EntityController`
+
 ---
 
 ## 🛠️ Stack Utilizada

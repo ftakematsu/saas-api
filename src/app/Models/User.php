@@ -59,4 +59,11 @@ class User extends Authenticatable implements JWTSubject
     {
         return [];
     }
+
+    public function conversations() {
+        return $this->belongsToMany(
+            Conversation::class,
+            'conversation_participants'
+        )->withTimestamps();
+    }
 }
