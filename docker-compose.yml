@@ -46,6 +46,31 @@ services:
       - "6379:6379"
     networks:
       - laravel
+  soketi:
+    image: quay.io/soketi/soketi:latest
+    container_name: soketi
+    environment:
+      SOKETI_DEBUG: '1'
+      SOKETI_METRICS_ENABLED: '1'
+      SOKETI_DEFAULT_APP_ID: app-id
+      SOKETI_DEFAULT_APP_KEY: app-key
+      SOKETI_DEFAULT_APP_SECRET: app-secret
+    ports:
+      - "6001:6001"
+      - "9601:9601"
+    networks:
+      - laravel
+  queue:
+    build: 
+      context: ./docker/php
+    container_name: laravel_queue
+    command: php artisan queue:work
+    volumes:
+      - ./src:/var/www
+    networks:
+      - laravel
+    depends_on:
+      - app
 volumes:
   mysql_data:
 

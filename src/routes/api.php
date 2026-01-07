@@ -4,11 +4,14 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\ChatController;
 use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\UserController;
+use Illuminate\Support\Facades\Broadcast;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/ping', function () {
     return response()->json(['pong' => true]);
 });
+
+Broadcast::routes(['middleware' => ['auth:api']]);
 
 Route::prefix('v1')->group(function () {
 

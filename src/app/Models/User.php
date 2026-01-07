@@ -66,4 +66,10 @@ class User extends Authenticatable implements JWTSubject
             'conversation_participants'
         )->withTimestamps();
     }
+
+    public function isParticipantOfConversation(int $conversationId): bool {
+        return $this->conversations()
+            ->where('conversations.id', $conversationId)
+            ->exists();
+    }
 }

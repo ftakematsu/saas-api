@@ -3,7 +3,9 @@
 namespace App\Application\Chat;
 
 use App\Domain\Chat\Entities\Message;
+use App\Domain\Chat\Events\MessageSent;
 use App\Domain\Chat\Repositories\MessageRepository;
+use Illuminate\Support\Facades\Event;
 
 class SendMessageUseCase
 {
@@ -11,7 +13,7 @@ class SendMessageUseCase
         private MessageRepository $repository
     ) {}
 
-    public function execute(SendMessageDTO $dto): void
+    public function execute(SendMessageDTO $dto)
     {
         $message = new Message(
             conversationId: $dto->conversationId,
@@ -20,5 +22,9 @@ class SendMessageUseCase
         );
 
         $this->repository->save($message);
+
+        Event::dispatch(new MessageSent($message));
+
+        return $message;
     }
 }

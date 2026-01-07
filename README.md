@@ -78,6 +78,19 @@ Criar Controller:
 
 ---
 
+## CI/CD
+
+Este projeto possui pipeline de integração contínua usando GitHub Actions.
+
+Etapas:
+- Lint (Pint / PHPStan)
+- Testes automatizados
+- Build de containers
+
+Os scripts são reutilizáveis e compatíveis com Jenkins.
+
+---
+
 ### 👨‍💻 Autor
 - **Fabio Matsunaga**
 - Desenvolvedor Full Stack

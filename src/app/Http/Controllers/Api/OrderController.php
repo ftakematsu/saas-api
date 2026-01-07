@@ -10,6 +10,29 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller {
+    
+    /**
+     * @OA\Post(
+     *     path="/api/orders",
+     *     summary="Criar um novo pedido",
+     *     tags={"orders"},
+     *     security={{"bearerAuth":{}}},
+     *
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"description"},
+     *             @OA\Property(property="description", type="string", example="Produto")
+     *             @OA\Property(property="value", type="float", example=1)
+     *         )
+     *     ),
+     *
+     *     @OA\Response(
+     *         response=200,
+     *         description="Pedido criado com sucesso"
+     *     )
+     * )
+     */
     public function store(
         Request $request,
         CreateOrder $useCase
