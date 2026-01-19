@@ -31,4 +31,14 @@ class EloquentUserRepository implements UserRepository
             password: $resource->password
         );
     }
+
+    public function getAllUsers() {
+        $resource = UserModel::get();
+        return $resource->map(fn ($user) => new User(
+            id: $user->id,
+            name: $user->name,
+            email: $user->email,
+            password: $user->password
+        ));
+    }
 }

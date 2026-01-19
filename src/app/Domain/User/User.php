@@ -2,7 +2,9 @@
 
 namespace App\Domain\User;
 
-class User
+use Illuminate\Contracts\Support\Arrayable;
+
+class User implements Arrayable
 {
     public function __construct(
         private string $id,
@@ -38,5 +40,14 @@ class User
     public function password(): string
     {
         return $this->password;
+    }
+
+    public function toArray(): array
+    {
+        return [
+            'id'    => $this->id,
+            'name'  => $this->name,
+            'email' => $this->email,
+        ];
     }
 }

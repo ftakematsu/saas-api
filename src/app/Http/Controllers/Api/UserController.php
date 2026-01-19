@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Application\User\CreateUser;
+use App\Application\User\ListUsers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -45,5 +46,11 @@ class UserController extends Controller
         );
 
         return response()->json(['message' => 'User created'], 201);
+    }
+
+    public function getAll(ListUsers $useCase) {
+        $users = $useCase->execute();
+
+        return response()->json($users);
     }
 }

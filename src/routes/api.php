@@ -20,6 +20,8 @@ Route::prefix('v1')->group(function () {
 
     // Rotas protegidas
     Route::middleware('auth:api')->group(function () {
+        Route::get('/users', [UserController::class, 'getAll']);
+
         Route::post('/orders', [OrderController::class, 'store']);
         Route::get('/orders', [OrderController::class, 'getAll']);
 
