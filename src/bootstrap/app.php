@@ -11,8 +11,16 @@ return Application::configure(basePath: dirname(__DIR__))
         api: __DIR__.'/../routes/api.php',
         health: '/up',
     )
+    ->withProviders([ // Essencial
+        App\Providers\BroadcastServiceProvider::class,
+    ])
     ->withMiddleware(function (Middleware $middleware) {
-        //
+        $middleware->append(
+            \Illuminate\Http\Middleware\HandleCors::class
+        );
+        $middleware->validateCsrfTokens(except: [
+            'broadcasting/auth',
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

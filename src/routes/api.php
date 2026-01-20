@@ -11,8 +11,6 @@ Route::get('/ping', function () {
     return response()->json(['pong' => true]);
 });
 
-Broadcast::routes(['middleware' => ['auth:api']]);
-
 Route::prefix('v1')->group(function () {
 
     Route::post('/login', [AuthController::class, 'login']);
