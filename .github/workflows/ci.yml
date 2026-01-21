@@ -1,4 +1,4 @@
-name: CI
+name: Laravel CI
 
 on:
   push:
@@ -6,25 +6,33 @@ on:
   pull_request:
 
 jobs:
-  backend:
+  laravel-ci:
     runs-on: ubuntu-latest
 
     steps:
-      - name: 📥 Checkout
-        uses: actions/checkout@v4
+    - name: Checkout do código
+      uses: actions/checkout@v4
 
-      - name: 🐘 Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: 8.2
-          extensions: pdo_mysql, redis
-          coverage: none
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.2'
+        extensions: mbstring, pdo, pdo_mysql
+        coverage: none
 
-      - name: 📦 Install dependencies
-        run: composer install --no-interaction --prefer-dist
+    - name: Copiar .env
+      run: cp src/.env.example src/.env
 
-      - name: 🔍 Lint
-        run: ./.ci/lint.sh
+    - name: Instalar dependências
+      run: composer install --no-progress --prefer-dist --optimize-autoloader
+      working-directory: src
 
-      - name: 🧪 Tests
-        run: ./.ci/test.sh
+    - name: Gerar key
+      run: php artisan key:generate
+      working-directory: src
+
+    - name: Lint
+      run: ./ci/lint.sh
+
+    - name: Testes
+      run: ./ci/test.sh

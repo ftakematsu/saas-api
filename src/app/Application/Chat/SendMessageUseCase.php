@@ -5,7 +5,6 @@ namespace App\Application\Chat;
 use App\Domain\Chat\Entities\Message;
 use App\Domain\Chat\Events\MessageSent;
 use App\Domain\Chat\Repositories\MessageRepository;
-use Illuminate\Support\Facades\Event;
 
 class SendMessageUseCase
 {
@@ -23,7 +22,8 @@ class SendMessageUseCase
 
         $this->repository->save($message);
 
-        Event::dispatch(new MessageSent($message));
+        // Event::dispatch(new MessageSent($message)); // Evite usar isso, pois isso dispara para todos ignorando o contexto do socket
+        broadcast(new MessageSent($message))->toOthers();
 
         return $message;
     }

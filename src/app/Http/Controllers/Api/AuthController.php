@@ -34,14 +34,15 @@ class AuthController extends Controller {
         Request $request,
         LoginUserUseCase $useCase
     ) {
-        $token = $useCase->execute(
+        $authData = $useCase->execute(
             $request->get('email'),
             $request->get('password')
         );
 
         return response()->json([
-            'access_token' => $token,
-            'token_type' => 'Bearer'
+            'access_token' => $authData['token'],
+            'token_type' => 'Bearer',
+            'user' => $authData['user']
         ]);
     }
 

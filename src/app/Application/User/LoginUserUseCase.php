@@ -14,7 +14,7 @@ class LoginUserUseCase
         private AuthService $auth
     ) {}
 
-    public function execute(string $email, string $password): string
+    public function execute(string $email, string $password)
     {
         $user = $this->repository->findByEmail($email);
 
@@ -22,6 +22,9 @@ class LoginUserUseCase
             throw new Exception('Credenciais inválidas');
         }
 
-        return $this->auth->generateToken($user);
+        return [
+            'token' => $this->auth->generateToken($user),
+            'user' => $user->toArray()
+        ];
     }
 }
